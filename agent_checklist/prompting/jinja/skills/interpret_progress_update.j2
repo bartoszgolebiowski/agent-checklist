@@ -1,0 +1,26 @@
+{% include 'memory/core.j2' %}
+{% include 'memory/working.j2' %}
+
+Phase 4 (Active Tracking). Interpret the latest user update and decide whether items moved forward.
+User statement:
+"""
+{{ state.working.latest_user_message or 'No progress statement supplied.' }}
+"""
+
+For each referenced checklist item, cite the item_id. When the user mentions specific subtasks, cite their sub_id as well so the state machine can update nested progress. Only request clarification if the message is ambiguous.
+
+Return JSON:
+{
+  "ai_response": str,
+  "signals": [
+    {
+      "item_ids": [str],
+      "sub_item_ids": [str],
+      "new_status": "pending" | "in_progress" | "complete" | null,
+      "note": str | null,
+      "context": str | null
+    }
+  ],
+  "needs_clarification": bool,
+  "clarification_prompt": str | null
+}

@@ -1,0 +1,40 @@
+{% include 'memory/core.j2' %}
+{% include 'memory/working.j2' %}
+
+Phase 2 feedback from the user should now be integrated into the checklist. Maintain sub-checklists only where the primary task benefits from extra structure (0-5 subtasks). User message:
+"""
+{{ state.working.latest_user_message or 'No new answer provided.' }}
+"""
+
+Propose clear updates referencing existing item IDs when relevant. Allowed actions for both items and sub-items: "add", "update", "remove".
+
+Return JSON:
+{
+  "ai_response": str,
+  "updates": [
+    {
+      "item_id": str | null,
+      "action": "add" | "update" | "remove",
+      "summary": str | null,
+      "detail": str | null,
+      "success_criteria": str | null,
+      "sub_items": [  // optional replacement list when a parent needs fuller structure
+        {
+          "summary": str,
+          "detail": str | null,
+          "success_criteria": str | null
+        }
+      ],
+      "sub_item_updates": [
+        {
+          "sub_item_id": str | null,
+          "action": "add" | "update" | "remove",
+          "summary": str | null,
+          "detail": str | null,
+          "success_criteria": str | null
+        }
+      ]
+    }
+  ],
+  "notes": [str]
+}

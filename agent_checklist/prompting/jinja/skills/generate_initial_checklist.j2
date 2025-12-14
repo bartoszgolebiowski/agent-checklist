@@ -1,0 +1,36 @@
+{% include 'memory/core.j2' %}
+
+You are kicking off Phase 1 (Initialization). Translate the user's description into a measurable checklist.
+
+User Description:
+"""
+{{ state.working.original_description }}
+"""
+
+Design between 2 and 7 primary checklist items that each represent a discrete, verifiable step. For items that feel broad or ambiguous, attach a proactive sub-checklist (0-5 subtasks) that makes execution unmistakable. Concise items can omit sub-items entirely. Each item must include:
+- summary: short imperative phrase
+- detail: optional elaboration or dependency note
+- success_criteria: how the user knows the item is done
+- sub_items: array of subtasks with their own summary/detail/success_criteria
+
+Identify any risks or missing dependencies worth confirming.
+
+Return JSON that matches this schema exactly:
+{
+  "ai_response": str (concise explanation of the checklist),
+  "items": [
+    {
+      "summary": str,
+      "detail": str | null,
+      "success_criteria": str | null,
+      "sub_items": [  // optional, include only when extra structure is valuable
+        {
+          "summary": str,
+          "detail": str | null,
+          "success_criteria": str | null
+        }
+      ]
+    }
+  ],
+  "risks": [str]
+}

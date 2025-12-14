@@ -1,0 +1,15 @@
+# Working Memory Snapshot
+{% if state.working.original_description %}- Task Description: {{ state.working.original_description }}
+{% endif %}
+{% if state.working.checklist_items %}- Checklist Items:
+{% for item in state.working.checklist_items %}  - id={{ item.item_id }} | status={{ item.status }} | summary={{ item.summary }}{% if item.success_criteria %} | success={{ item.success_criteria }}{% endif %}
+{% if item.sub_items %}    * Sub-Checklist:
+{% for sub in item.sub_items %}      - sub_id={{ sub.sub_item_id }} | status={{ sub.status }} | summary={{ sub.summary }}{% if sub.success_criteria %} | success={{ sub.success_criteria }}{% endif %}
+{% endfor %}{% endif %}
+{% endfor %}{% endif %}
+{% if state.working.refinement_exchanges %}- Refinement Exchanges:
+{% for exchange in state.working.refinement_exchanges %}  - question={{ exchange.question }} | intent={{ exchange.intent }} | answer={{ exchange.answer }}
+{% endfor %}{% endif %}
+{% if state.working.progress_log %}- Progress Log:
+{% for log in state.working.progress_log[-5:] %}  - referenced={{ log.referenced_item_ids }} | status={{ log.status_transitions }} | notes={{ log.contextual_notes or 'n/a' }}
+{% endfor %}{% endif %}

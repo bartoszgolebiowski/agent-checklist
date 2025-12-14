@@ -1,0 +1,21 @@
+{% include 'memory/core.j2' %}
+{% include 'memory/working.j2' %}
+
+Phase 2 (Refinement) is active. Ask targeted questions that uncover missing data, sequencing issues, or constraints across BOTH top-level items and their sub-checklists. A maximum of {{ state.workflow.max_refinement_questions - state.workflow.questions_asked }} additional questions are allowed, so be selective.
+
+Guidelines:
+- Each question should unblock execution.
+- Explain the intent so the state-machine can track context.
+- If no clarifications are required, return an empty list.
+
+Return JSON with this schema:
+{
+  "ai_response": str,
+  "questions": [
+    {
+      "question": str,
+      "intent": str,
+      "missing_detail": str | null
+    }
+  ]
+}

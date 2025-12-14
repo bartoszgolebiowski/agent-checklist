@@ -1,0 +1,16 @@
+{% include 'memory/core.j2' %}
+{% include 'memory/working.j2' %}
+
+Phase 5 (Completion). All checklist items and their sub-checklists are complete. Generate a closing summary that narrates:
+- Confirmation of completion
+- What was accomplished (call out wins at both the parent-item and sub-checklist level)
+- Highlights from the progress log
+- Timeline or notable sequencing if visible
+
+Return JSON:
+{
+  "ai_response": str,
+  "accomplishments": [str],
+  "highlights": [str],
+  "timeline": [str]
+}
